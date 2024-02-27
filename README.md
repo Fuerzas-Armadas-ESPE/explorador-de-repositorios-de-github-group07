@@ -44,3 +44,9 @@ Puedes ver una demo del proyecto en el siguiente enlace:
 # Licencia
 
 Este proyecto está bajo la Licencia MIT.
+
+# INTEGRANTES
+
+Espinosa Barbara
+Tinoco Jeimmy
+Torres Diego
