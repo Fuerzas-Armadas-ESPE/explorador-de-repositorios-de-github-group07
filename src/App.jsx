@@ -12,6 +12,8 @@ import RepoList from "./components/RepoList";
 function App() {
   const [username, setUsername] = useState("");
   const [showRepoList, setShowRepoList] = useState(false);
+  const [stars, setStars] = useState(0); // Filtro por número de estrellas
+  const [language, setLanguage] = useState(""); // Filtro por idioma
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -20,6 +22,14 @@ function App() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     setShowRepoList(true);
+  };
+
+  const handleStarsChange = (event) => {
+    setStars(parseInt(event.target.value));
+  };
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
   };
 
   return (
@@ -41,11 +51,26 @@ function App() {
             fullWidth
             sx={{ marginBottom: "10px" }}
           />
+          <TextField
+            label="Número mínimo de estrellas"
+            type="number"
+            variant="outlined"
+            value={stars}
+            onChange={handleStarsChange}
+            fullWidth
+            sx={{ marginBottom: "10px" }}
+          />
           <Button type="submit" variant="contained" fullWidth>
             Buscar Repositorios
           </Button>
         </form>
-        {showRepoList && <RepoList username={username} />}
+        {showRepoList && (
+          <RepoList
+            username={username}
+            stars={stars}
+            language={language}
+          />
+        )}
       </Container>
     </div>
   );
