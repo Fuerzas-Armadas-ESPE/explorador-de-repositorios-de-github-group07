@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import GitHubIcon from '@mui/icons-material/GitHub';
 import "../App.css";
 
-const RepoList = ({ username }) => {
+const RepoList = ({ username, stars, language }) => {
   const [repos, setRepos] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,17 @@ const RepoList = ({ username }) => {
         const response = await axios.get(
           `https://api.github.com/users/${username}/repos?page=${page}&per_page=5`
         );
-        const sortedRepos = response.data.sort((a, b) => b.size - a.size);
+        let filteredRepos = response.data;
+
+        // Aplicar filtros
+        if (stars > 0) {
+          filteredRepos = filteredRepos.filter(repo => repo.stargazers_count >= stars);
+        }
+        if (language) {
+          filteredRepos = filteredRepos.filter(repo => repo.language === language);
+        }
+
+        const sortedRepos = filteredRepos.sort((a, b) => b.size - a.size);
         setRepos(sortedRepos);
       } catch (error) {
         console.error("Error fetching repos:", error);
@@ -27,7 +37,7 @@ const RepoList = ({ username }) => {
     };
 
     fetchData();
-  }, [username, page]);
+  }, [username, stars, language, page]);
 
   const handleNextPage = () => {
     setPage(page + 1);
@@ -80,6 +90,8 @@ const RepoList = ({ username }) => {
 
 RepoList.propTypes = {
   username: PropTypes.string.isRequired,
+  stars: PropTypes.number.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 export default RepoList;

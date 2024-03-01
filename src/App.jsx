@@ -14,8 +14,9 @@ import RepoList from "./components/RepoList";
 function App() {
   const [username, setUsername] = useState("");
   const [showRepoList, setShowRepoList] = useState(false);
-  const [stars, setStars] = useState(0); 
-  const [language, setLanguage] = useState(""); 
+  const [stars, setStars] = useState(0); // Filtro por número de estrellas
+  const [language, setLanguage] = useState(""); // Filtro por idioma
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -85,6 +86,15 @@ function App() {
                 </InputAdornment>
               ),
             }}
+          />
+          <TextField
+            label="Número mínimo de estrellas"
+            type="number"
+            variant="outlined"
+            value={stars}
+            onChange={handleStarsChange}
+            fullWidth
+            sx={{ marginBottom: "10px" }}
           />
           <Button type="submit" variant="contained" fullWidth>
             Buscar Repositorios
