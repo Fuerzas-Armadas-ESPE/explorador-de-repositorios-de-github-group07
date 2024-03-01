@@ -6,7 +6,9 @@ import {
   Container,
   AppBar,
   Toolbar,
+  InputAdornment,
 } from "@mui/material";
+import { AccountCircle, Star } from "@mui/icons-material"; 
 import RepoList from "./components/RepoList";
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
   const [showRepoList, setShowRepoList] = useState(false);
   const [stars, setStars] = useState(0); // Filtro por número de estrellas
   const [language, setLanguage] = useState(""); // Filtro por idioma
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -49,7 +52,40 @@ function App() {
             value={username}
             onChange={handleUsernameChange}
             fullWidth
-            sx={{ marginBottom: "10px" }}
+            sx={{
+              marginBottom: "15px",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+            inputProps={{ style: { padding: "12px" } }}
+            InputLabelProps={{ style: { fontWeight: "bold" } }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="Número mínimo de estrellas"
+            type="number"
+            variant="outlined"
+            value={stars}
+            onChange={handleStarsChange}
+            fullWidth
+            sx={{
+              marginBottom: "15px",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+            inputProps={{ style: { padding: "12px" } }}
+            InputLabelProps={{ style: { fontWeight: "bold" } }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Star color="action" />
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
             label="Número mínimo de estrellas"
