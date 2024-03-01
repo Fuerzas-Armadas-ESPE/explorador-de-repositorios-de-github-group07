@@ -6,12 +6,16 @@ import {
   Container,
   AppBar,
   Toolbar,
+  InputAdornment,
 } from "@mui/material";
+import { AccountCircle, Star } from "@mui/icons-material"; 
 import RepoList from "./components/RepoList";
 
 function App() {
   const [username, setUsername] = useState("");
   const [showRepoList, setShowRepoList] = useState(false);
+  const [stars, setStars] = useState(0); 
+  const [language, setLanguage] = useState(""); 
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -20,6 +24,14 @@ function App() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     setShowRepoList(true);
+  };
+
+  const handleStarsChange = (event) => {
+    setStars(parseInt(event.target.value));
+  };
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
   };
 
   return (
@@ -39,13 +51,52 @@ function App() {
             value={username}
             onChange={handleUsernameChange}
             fullWidth
-            sx={{ marginBottom: "10px" }}
+            sx={{
+              marginBottom: "15px",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+            inputProps={{ style: { padding: "12px" } }}
+            InputLabelProps={{ style: { fontWeight: "bold" } }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="Número mínimo de estrellas"
+            type="number"
+            variant="outlined"
+            value={stars}
+            onChange={handleStarsChange}
+            fullWidth
+            sx={{
+              marginBottom: "15px",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+            inputProps={{ style: { padding: "12px" } }}
+            InputLabelProps={{ style: { fontWeight: "bold" } }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Star color="action" />
+                </InputAdornment>
+              ),
+            }}
           />
           <Button type="submit" variant="contained" fullWidth>
             Buscar Repositorios
           </Button>
         </form>
-        {showRepoList && <RepoList username={username} />}
+        {showRepoList && (
+          <RepoList
+            username={username}
+            stars={stars}
+            language={language}
+          />
+        )}
       </Container>
     </div>
   );
